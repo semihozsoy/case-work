@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1161B4BC2F902F7A009E8DB9 /* API in Frameworks */ = {isa = PBXBuildFile; productRef = 1161B4BB2F902F7A009E8DB9 /* API */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1161B44E2F9028A7009E8DB9 /* bitaksi-case.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bitaksi-case.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1161B4762F902BD9009E8DB9 /* API */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = API; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1161B4BC2F902F7A009E8DB9 /* API in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +51,9 @@
 		1161B4452F9028A7009E8DB9 = {
 			isa = PBXGroup;
 			children = (
+				1161B4762F902BD9009E8DB9 /* API */,
 				1161B4502F9028A7009E8DB9 /* bitaksi-case */,
+				1161B4BA2F902F7A009E8DB9 /* Frameworks */,
 				1161B44F2F9028A7009E8DB9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +64,13 @@
 				1161B44E2F9028A7009E8DB9 /* bitaksi-case.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1161B4BA2F902F7A009E8DB9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,6 +93,7 @@
 			);
 			name = "bitaksi-case";
 			packageProductDependencies = (
+				1161B4BB2F902F7A009E8DB9 /* API */,
 			);
 			productName = "bitaksi-case";
 			productReference = 1161B44E2F9028A7009E8DB9 /* bitaksi-case.app */;
@@ -353,6 +369,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1161B4BB2F902F7A009E8DB9 /* API */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = API;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1161B4462F9028A7009E8DB9 /* Project object */;
 }
