@@ -97,6 +97,22 @@ final class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - AlertShowable
+extension HomeViewController: AlertShowable {
+    func showCountryPicker(
+        countries: [String],
+        selected: String?
+    ) {
+        showActionSheet(
+            title: "Kalkış Ülkesi",
+            options: countries,
+            selected: selected
+        ) { [weak self] country in
+            self?.presenter?.notifyCountrySelected(country)
+        }
+    }
+}
+
 // MARK: - HomeViewInterface
 extension HomeViewController: HomeViewInterface {
 
@@ -119,26 +135,6 @@ extension HomeViewController: HomeViewInterface {
             guard let self else { return }
             self.indicator.stopAnimating()
         }
-    }
-
-    func showCountryPicker(countries: [String], selected: String?) {
-        let alert = UIAlertController(title: "Kalkış Ülkesi", message: nil, preferredStyle: .actionSheet)
-
-        let allAction = UIAlertAction(title: selected == nil ? "✓ Tümü" : "Tümü", style: .default) { [weak self] _ in
-            self?.presenter?.notifyCountrySelected(nil)
-        }
-        alert.addAction(allAction)
-
-        for country in countries {
-            let title = country == selected ? "✓ \(country)" : country
-            let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
-                self?.presenter?.notifyCountrySelected(country)
-            }
-            alert.addAction(action)
-        }
-
-        alert.addAction(UIAlertAction(title: "İptal", style: .cancel))
-        present(alert, animated: true)
     }
 
     func updateFilterButton(isActive: Bool) {
