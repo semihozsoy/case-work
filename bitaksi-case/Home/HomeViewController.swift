@@ -40,6 +40,7 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Open Sky Flights"
         setupIndicator()
         setupZoomButtons()
         MapManager.shared.setup(mapView: mapView, delegate: self)
