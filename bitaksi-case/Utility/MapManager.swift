@@ -85,16 +85,46 @@ extension MapManager: MapManagerProtocol {
     func showFlights(_ flights: [FlightState]) {
         guard let mapView else { return }
 
-        // Mevcut uçuş annotationlarını kaldır
-        let existing = mapView.annotations.filter { $0 is FlightAnnotation }
-        mapView.removeAnnotations(existing)
+        let existingAnnotations = mapView.annotations.compactMap { $0 as? FlightAnnotation }
+        var existingDict = [String: FlightAnnotation]()
+        existingAnnotations.forEach {
+            if let id = $0.flight.icao24 { existingDict[id] = $0 }
+        }
 
-        // Koordinatı olmayan uçuşları filtrele
-        let annotations = flights
-            .filter { $0.latitude != nil && $0.longitude != nil }
-            .map { FlightAnnotation(flight: $0) }
+        var annotationsToAdd = [FlightAnnotation]()
+        var identifiersToKeep = Set<String>()
 
-        mapView.addAnnotations(annotations)
+        for flight in flights {
+            guard flight.latitude != nil, flight.longitude != nil, let id = flight.icao24 else { continue }
+            identifiersToKeep.insert(id)
+
+            if let existingAnnotation = existingDict[id] {
+                // Uçak haritada varsa, animasyonsuz olarak veriyi ve koordinatı güncelle.
+                // @objc dynamic sayesinde MapKit pinin yerini otomatik kaydıracak.
+                existingAnnotation.flight = flight
+                existingAnnotation.coordinate = CLLocationCoordinate2D(latitude: flight.latitude!, longitude: flight.longitude!)
+                
+                // Eğer uçağın açısının (rotasyon) anlık güncellenmesini istiyorsan annotation view'ı bulup transform'unu güncelleyebilirsin:
+                if let view = mapView.view(for: existingAnnotation) {
+                    if let track = flight.trueTrack {
+                        let radians = CGFloat(track) * .pi / 180
+                        view.transform = CGAffineTransform(rotationAngle: radians)
+                    }
+                }
+            } else {
+                // Uçak haritada yoksa yeni pin yarat
+                let newAnnotation = FlightAnnotation(flight: flight)
+                annotationsToAdd.append(newAnnotation)
+            }
+        }
+
+        let annotationsToRemove = existingAnnotations.filter {
+            guard let id = $0.flight.icao24 else { return true }
+            return !identifiersToKeep.contains(id)
+        }
+
+        mapView.removeAnnotations(annotationsToRemove)
+        mapView.addAnnotations(annotationsToAdd)
     }
 }
 

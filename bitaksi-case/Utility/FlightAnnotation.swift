@@ -8,12 +8,14 @@
 import MapKit
 
 final class FlightAnnotation: NSObject, MKAnnotation {
-    let flight: FlightState
-
-    var coordinate: CLLocationCoordinate2D
+    var flight: FlightState
+    
+    // MapKit'in lokasyon değişimini dinleyebilmesi için @objc dynamic
+    @objc dynamic var coordinate: CLLocationCoordinate2D
+    
     var title: String?
     var subtitle: String?
-
+    
     init(flight: FlightState) {
         self.flight = flight
         self.coordinate = CLLocationCoordinate2D(
@@ -25,3 +27,4 @@ final class FlightAnnotation: NSObject, MKAnnotation {
         super.init()
     }
 }
+
