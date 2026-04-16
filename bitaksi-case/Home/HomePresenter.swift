@@ -39,7 +39,7 @@ extension HomePresenter: HomePresenterInterface {
     }
 
     func notifyRegionChanged(region: MKCoordinateRegion) {
-        LogManager.debug("[HomePresenter] Region changed → center: \(region.center.latitude), \(region.center.longitude)")
+        LogManager.debug("Region changed -> center: \(region.center.latitude), \(region.center.longitude)")
         regionSubject.send(region)
     }
 
@@ -61,7 +61,7 @@ extension HomePresenter: HomePresenterInterface {
 
     func didFailWithError(_ error: Error) {
         view?.hideLoading()
-        LogManager.error("[HomePresenter] \(error)")
+        LogManager.error("error: \(error)")
     }
 }
 
@@ -95,7 +95,7 @@ private extension HomePresenter {
             }
             .switchToLatest()
             .sink { [weak self] region in
-                LogManager.info("[HomePresenter] ⏱ Auto-refresh triggered → bbox: \(BoundingBox(region: region))")
+                LogManager.info("auto-refresh triggered -> bbox: \(BoundingBox(region: region))")
                 let bbox = BoundingBox(region: region)
                 self?.interactor?.fetchStates(bbox: bbox)
             }

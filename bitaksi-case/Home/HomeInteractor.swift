@@ -35,21 +35,21 @@ extension HomeInteractor: HomeInteractorInterface {
 
     func fetchStates(bbox: BoundingBox?) {
         guard let token = accessToken else {
-            LogManager.warning("[HomeInteractor] No token, fetching token first...")
+            LogManager.warning("no token")
             fetchToken()
             return
         }
-        LogManager.debug("[HomeInteractor] → fetchStates | bbox: \(bbox.map { "lamin:\($0.lamin) lomin:\($0.lomin) lamax:\($0.lamax) lomax:\($0.lomax)" } ?? "nil (world)")")
+        LogManager.debug("fetchStates | bbox: \(bbox.map { "lamin:\($0.lamin) lomin:\($0.lomin) lamax:\($0.lamax) lomax:\($0.lomax)" } ?? "nil (world)")")
         networkManager.request(
             endpoint: .states(token: token, bbox: bbox),
             type: HomeResponse.self
         ) { [weak self] result in
             switch result {
             case .success(let response):
-                LogManager.info("[HomeInteractor] ✓ fetchStates success → \(response.states.count) flights")
+                LogManager.info("fetchStates success → \(response.states.count) flights")
                 self?.presenter?.didFetchFlights(response.states)
             case .failure(let error):
-                LogManager.error("[HomeInteractor] ✗ fetchStates error → \(error)")
+                LogManager.error("fetchStates error → \(error)")
                 self?.presenter?.didFailWithError(error)
             }
         }
