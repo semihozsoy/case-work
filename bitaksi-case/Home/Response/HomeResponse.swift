@@ -14,7 +14,7 @@ public struct HomeResponse: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         time = try container.decode(Int.self, forKey: .time)
-        let rawStates = try container.decode([[RawValue]].self, forKey: .states)
+        let rawStates = try container.decodeIfPresent([[RawValue]].self, forKey: .states) ?? []
         states = rawStates.compactMap { FlightState(raw: $0) }
     }
 
@@ -64,24 +64,24 @@ enum RawValue: Decodable {
 // MARK: - FlightState
 
 public struct FlightState {
-    public let icao24:         String        // 0
-    public let callsign:       String?       // 1  nullable
-    public let originCountry:  String        // 2
-    public let timePosition:   Int?          // 3  nullable
-    public let lastContact:    Int           // 4
-    public let longitude:      Double?       // 5  nullable
-    public let latitude:       Double?       // 6  nullable
-    public let baroAltitude:   Double?       // 7  nullable
-    public let onGround:       Bool          // 8
-    public let velocity:       Double?       // 9  nullable
-    public let trueTrack:      Double?       // 10 nullable
-    public let verticalRate:   Double?       // 11 nullable
+    public let icao24: String?  // 0
+    public let callsign: String?  // 1
+    public let originCountry: String? // 2
+    public let timePosition: Int? // 3
+    public let lastContact: Int? // 4
+    public let longitude: Double? // 5
+    public let latitude: Double? // 6
+    public let baroAltitude: Double? // 7
+    public let onGround: Bool? // 8
+    public let velocity: Double? // 9
+    public let trueTrack: Double? // 10
+    public let verticalRate: Double? // 11
     // 12: sensors [Int] — nullable, skip
-    public let geoAltitude:    Double?       // 13 nullable
-    public let squawk:         String?       // 14 nullable
-    public let spi:            Bool          // 15
-    public let positionSource: Int           // 16 (0=ADS-B, 1=ASTERIX, 2=MLAT, 3=FLARM)
-    public let category:       Int?          // 17 bazı response'larda gelmeyebilir
+    public let geoAltitude: Double? // 13
+    public let squawk: String? // 14
+    public let spi: Bool? // 15
+    public let positionSource: Int? // 16 (0=ADS-B, 1=ASTERIX, 2=MLAT, 3=FLARM)
+    public let category: Int?  // 17
 
     init?(raw: [RawValue]) {
         guard raw.count >= 17,
