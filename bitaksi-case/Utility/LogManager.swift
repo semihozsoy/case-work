@@ -11,7 +11,7 @@ import CocoaLumberjackSwift
 final class LogManager {
 
     static func setup() {
-        DDLog.add(DDOSLogger.sharedInstance)   // Xcode konsolu
+        DDLog.add(DDOSLogger.sharedInstance)
         let fileLogger = DDFileLogger()
         fileLogger.rollingFrequency = 60 * 60 * 24   // 24 saat
         fileLogger.logFileManager.maximumNumberOfLogFiles = 7
