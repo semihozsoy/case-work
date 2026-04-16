@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1161B4BC2F902F7A009E8DB9 /* API in Frameworks */ = {isa = PBXBuildFile; productRef = 1161B4BB2F902F7A009E8DB9 /* API */; };
+		11DDA6172F91043600CA2192 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 11DDA6162F91043600CA2192 /* CocoaLumberjack */; };
+		11DDA6192F91043600CA2192 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 11DDA6182F91043600CA2192 /* CocoaLumberjackSwift */; };
+		11DDA61B2F91043600CA2192 /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = 11DDA61A2F91043600CA2192 /* CocoaLumberjackSwiftLogBackend */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +44,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11DDA6172F91043600CA2192 /* CocoaLumberjack in Frameworks */,
 				1161B4BC2F902F7A009E8DB9 /* API in Frameworks */,
+				11DDA61B2F91043600CA2192 /* CocoaLumberjackSwiftLogBackend in Frameworks */,
+				11DDA6192F91043600CA2192 /* CocoaLumberjackSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +100,9 @@
 			name = "bitaksi-case";
 			packageProductDependencies = (
 				1161B4BB2F902F7A009E8DB9 /* API */,
+				11DDA6162F91043600CA2192 /* CocoaLumberjack */,
+				11DDA6182F91043600CA2192 /* CocoaLumberjackSwift */,
+				11DDA61A2F91043600CA2192 /* CocoaLumberjackSwiftLogBackend */,
 			);
 			productName = "bitaksi-case";
 			productReference = 1161B44E2F9028A7009E8DB9 /* bitaksi-case.app */;
@@ -123,6 +132,9 @@
 			);
 			mainGroup = 1161B4452F9028A7009E8DB9;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				11DDA6152F91043600CA2192 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1161B44F2F9028A7009E8DB9 /* Products */;
 			projectDirPath = "";
@@ -370,10 +382,36 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		11DDA6152F91043600CA2192 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		1161B4BB2F902F7A009E8DB9 /* API */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = API;
+		};
+		11DDA6162F91043600CA2192 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11DDA6152F91043600CA2192 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		11DDA6182F91043600CA2192 /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11DDA6152F91043600CA2192 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
+		11DDA61A2F91043600CA2192 /* CocoaLumberjackSwiftLogBackend */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11DDA6152F91043600CA2192 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwiftLogBackend;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
