@@ -5,15 +5,13 @@
 //  Created by Semih Özsoy on 15.04.2026.
 //
 
-import Alamofire
-
 public protocol Endpoint {
     var baseUrl: String {get}
     var path: String {get}
     var method: HTTPMethod {get}
-    var parameters:[String: Sendable] {get}
+    var parameters: [String: Sendable] {get}
     var headers: [String: String] {get}
-    var encoding: ParameterEncoding {get}
+    var encoding: HTTPEncoding {get}
 }
 
 public extension Endpoint {

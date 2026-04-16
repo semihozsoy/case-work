@@ -11,19 +11,26 @@ import Alamofire
 public typealias Completion<T> = (Result<T, APIClientError>) -> Void where T: Decodable
 
 public final class NetworkManager<EndpointItem: Endpoint> {
-    public init() {}
+    private let session: Session
+    private var currentTask: RequestToken?
+
+    public init(eventMonitors: [EventMonitor] = []) {
+        session = Session(eventMonitors: eventMonitors)
+    }
+
     private var possibleEmptyResponseCode: Set<Int> {
         var defaultSet = DataResponseSerializer.defaultEmptyResponseCodes
         defaultSet.insert(200)
         defaultSet.insert(201)
         return defaultSet
     }
-    
+
     public func request<T: Decodable>(endpoint: EndpointItem, type: T.Type, completion: @escaping Completion<T>) {
-        AF.request(endpoint.url,
-                   method: endpoint.method,
+        currentTask?.cancel()
+        let dataRequest = session.request(endpoint.url,
+                   method: endpoint.method.alamofireMethod,
                    parameters: endpoint.parameters,
-                   encoding: endpoint.encoding,
+                   encoding: endpoint.encoding.alamofireEncoding,
                    headers: HTTPHeaders(endpoint.headers))
         .validate()
         .response(
@@ -55,7 +62,7 @@ public final class NetworkManager<EndpointItem: Endpoint> {
                     }
                     
                 }
-                
             })
+        currentTask = RequestToken(dataRequest)
     }
 }
