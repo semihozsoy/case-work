@@ -22,20 +22,22 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     private let indicator = UIActivityIndicatorView(style: .large)
 
-    private lazy var zoomInButton: UIButton  = {
-        let b = makeZoomButton(systemName: "plus.magnifyingglass")
-        b.addTarget(self, action: #selector(zoomInTapped), for: .touchUpInside)
-        return b
+    private lazy var zoomInButton: CustomButton = {
+        let button = CustomButton(systemName: "plus.magnifyingglass")
+        button.addTarget(self, action: #selector(zoomInTapped), for: .touchUpInside)
+        return button
     }()
-    private lazy var zoomOutButton: UIButton = {
-        let b = makeZoomButton(systemName: "minus.magnifyingglass")
-        b.addTarget(self, action: #selector(zoomOutTapped), for: .touchUpInside)
-        return b
+    
+    private lazy var zoomOutButton: CustomButton = {
+        let button = CustomButton(systemName: "minus.magnifyingglass")
+        button.addTarget(self, action: #selector(zoomOutTapped), for: .touchUpInside)
+        return button
     }()
-    private lazy var filterButton: UIButton = {
-        let b = makeZoomButton(systemName: "line.3.horizontal.decrease.circle")
-        b.addTarget(self, action: #selector(filterTapped), for: .touchUpInside)
-        return b
+    
+    private lazy var filterButton: CustomButton = {
+        let button = CustomButton(systemName: "line.3.horizontal.decrease.circle")
+        button.addTarget(self, action: #selector(filterTapped), for: .touchUpInside)
+        return button
     }()
 
     override func viewDidLoad() {
@@ -63,26 +65,14 @@ final class HomeViewController: UIViewController {
         stack.spacing = 8
         stack.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stack)
-        NSLayoutConstraint.activate([
-            stack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
+        NSLayoutConstraint.activate(
+            [stack.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: -16),
+            stack.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -24)
         ])
-    }
-
-    private func makeZoomButton(systemName: String) -> UIButton {
-        var config = UIButton.Configuration.filled()
-        config.image = UIImage(systemName: systemName)
-        config.baseForegroundColor = .white
-        config.baseBackgroundColor = UIColor.systemBlue.withAlphaComponent(0.9)
-        config.cornerStyle = .medium
-        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        let button = UIButton(configuration: config)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            button.widthAnchor.constraint(equalToConstant: 44),
-            button.heightAnchor.constraint(equalToConstant: 44)
-        ])
-        return button
     }
 
     @objc private func zoomInTapped() {
