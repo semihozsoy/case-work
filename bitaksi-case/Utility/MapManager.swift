@@ -98,23 +98,17 @@ extension MapManager: MapManagerProtocol {
             guard flight.latitude != nil, flight.longitude != nil, let id = flight.icao24 else { continue }
             identifiersToKeep.insert(id)
 
-            if let existingAnnotation = existingDict[id] {
+            if let existing = existingDict[id] {
                 // Uçak haritada varsa, animasyonsuz olarak veriyi ve koordinatı güncelle.
                 // @objc dynamic sayesinde MapKit pinin yerini otomatik kaydıracak.
-                existingAnnotation.flight = flight
-                existingAnnotation.coordinate = CLLocationCoordinate2D(latitude: flight.latitude!, longitude: flight.longitude!)
-                
-                // Eğer uçağın açısının (rotasyon) anlık güncellenmesini istiyorsan annotation view'ı bulup transform'unu güncelleyebilirsin:
-                if let view = mapView.view(for: existingAnnotation) {
-                    if let track = flight.trueTrack {
-                        let radians = CGFloat(track) * .pi / 180
-                        view.transform = CGAffineTransform(rotationAngle: radians)
-                    }
+                existing.flight = flight
+                existing.coordinate = CLLocationCoordinate2D(latitude: flight.latitude ?? 0, longitude: flight.longitude ?? 0)
+
+                if let view = mapView.view(for: existing), let track = flight.trueTrack {
+                    view.transform = CGAffineTransform(rotationAngle: CGFloat(track) * .pi / 180)
                 }
             } else {
-                // Uçak haritada yoksa yeni pin yarat
-                let newAnnotation = FlightAnnotation(flight: flight)
-                annotationsToAdd.append(newAnnotation)
+                annotationsToAdd.append(FlightAnnotation(flight: flight))
             }
         }
 
